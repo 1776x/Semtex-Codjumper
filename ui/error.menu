@@ -1,0 +1,144 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+
+{	
+	menuDef
+	{
+		name			"error_popmenu"
+		style			WINDOW_STYLE_SHADER
+		fullScreen		1
+		focusColor		COLOR_FOCUSED
+		visible			1		
+		backcolor		1 1 1 1
+		background		"semtex_background"
+		rect			FULLSCREEN_WIDE
+
+		onClose
+		{
+			uiScript clearError;
+		}
+		onEsc
+		{
+			uiScript clearError;
+			close error_popmenu;
+			open main;
+		}
+
+		itemDef
+		{
+			rect			128 20 200 100 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+			forecolor		1 1 1 1
+			style			WINDOW_STYLE_SHADER
+			background		"semtex_logo"
+			visible 		1
+			decoration
+		}
+
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			0 7 1000 3 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+			backcolor		0 0.54 1 1
+			visible			1	
+		}
+
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			0 -10 1000 3 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			backcolor		0 0.54 1 1
+			visible			1	
+		}
+
+		itemDef
+		{
+			style           WINDOW_STYLE_SHADER
+			rect 			-128 -93 256 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+            background      "line_horizontal"
+            forecolor       1 0.44 0.13 1
+            visible 		1
+		}
+
+		itemDef
+		{
+			name			confirm
+			rect			-128 -70 256 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			style			WINDOW_STYLE_EMPTY
+			textstyle		ITEM_TEXTSTYLE_SHADOWEDMORE
+			dvar			"com_errorTitle"
+			textscale		TEXTSIZE_TITLE
+			textalign		ITEM_ALIGN_CENTER
+			forecolor		0 0.54 1 1
+			visible			1
+			decoration
+			autowrapped
+		}
+
+		itemDef
+		{
+			name			errorinfo
+			rect			-128 -45 256 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER			
+			style			WINDOW_STYLE_EMPTY
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			dvar			"com_errorMessage"
+			textscale		.35
+			textalign		ITEM_ALIGN_CENTER
+			forecolor		0 0.54 1 1
+			visible			1
+			decoration
+			autowrapped
+		}
+		itemDef
+		{
+			rect			-40 30 80 15 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			style			WINDOW_STYLE_EMPTY
+			text			"Reconnect"
+			type			ITEM_TYPE_BUTTON
+			textscale		.3
+			textfont		UI_FONT_NORMAL
+			textalign		ITEM_ALIGN_CENTER
+			textaligny		13
+			forecolor		0 0.54 1 1
+			border			1
+			bordercolor		1 0.44 0.13 1
+			visible			1
+			onFocus
+			{
+				play "mouse_over";
+			}
+			action
+			{
+				play "mouse_click";
+				execNow "reconnect";
+			}
+		}
+		itemDef
+		{
+			name			back
+			rect			-40 50 80 15 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			style			WINDOW_STYLE_EMPTY
+			text			"@MENU_EXIT"
+			type			ITEM_TYPE_BUTTON
+			textscale		.3
+			textfont		UI_FONT_NORMAL
+			textalign		ITEM_ALIGN_CENTER
+			textaligny		13
+			forecolor		0 0.54 1 1
+			border			1
+			bordercolor		1 0.44 0.13 1
+			visible			1
+			onFocus
+			{
+				play "mouse_over";
+			}
+			action
+			{
+				play "mouse_click";
+				uiScript clearError;
+				close error_popmenu;
+				open main
+			}
+		}
+	}
+	#include "ui/safearea.menu"
+}

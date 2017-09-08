@@ -1,0 +1,227 @@
+#include "ui/menudef.h"
+
+#define CJ_MAXNUM 7
+#define CJ_COL( itemIndex )         ((itemIndex - 1 - ((itemIndex - 1) % CJ_MAXNUM)) / CJ_MAXNUM)
+#define CJ_ROW( itemIndex )         ((itemIndex - 1) % CJ_MAXNUM)
+
+#define CJ_BUTTON(itemNum,textArg,responseArg,onFocusArg) \		
+		itemDef \
+		{ \
+			type 				ITEM_TYPE_BUTTON \
+			style				WINDOW_STYLE_FILLED \
+			rect				(25 + CJ_COL( itemNum ) * 95) (60 + CJ_ROW( itemNum )*26) 90 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			forecolor			1 1 1 1 \
+			border				1 \
+			bordercolor			1 1 1 1 \
+			backcolor			0.3 0.3 0.3 0.75 \
+			visible				1 \
+			exp					text(textArg) \
+			textfont			UI_FONT_NORMAL \
+			textscale			0.25 \
+			textalign			ITEM_ALIGN_CENTER \
+			textaligny			15 \
+			mouseEnter 			{ play "mouse_over"; \
+			setLocalVarString ui_cj_hintstring "^5>>^7"onFocusArg \
+			} \
+			mouseExit 			{ setLocalVarString ui_cj_hintstring "^5>>^7" } \
+			action 				{ play "mouse_click"; \
+			scriptMenuResponse responseArg;  \
+			}  \
+		}
+#define CJ_BUTTON_WIDE(itemNum,textArg,responseArg,onFocusArg) \
+		itemDef \
+		{ \
+			type 				ITEM_TYPE_BUTTON \
+			style				WINDOW_STYLE_FILLED \
+			rect				25 (216 + (itemNum*26)) 185 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			forecolor			1 1 1 1 \
+			border				1 \
+			bordercolor			1 1 1 1 \
+			backcolor			0.3 0.3 0.3 0.75 \
+			visible				1 \
+			exp					text(textArg) \
+			textfont			UI_FONT_NORMAL \
+			textscale			0.25 \
+			textalign			ITEM_ALIGN_CENTER \
+			textaligny			15 \
+			mouseEnter 			{ play "mouse_over"; onFocusArg;} \
+			action 				{ play "mouse_click"; \
+			scriptMenuResponse responseArg;  \
+			}  \
+		}
+		
+#define CJ_PLAYERITEM(itemNum,responseArg) \		
+		itemDef \
+		{ \
+			type 				ITEM_TYPE_BUTTON \
+			style				WINDOW_STYLE_FILLED \
+			rect				250 (20+(itemNum*10)) 100 10 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			exp					text("Client "+ itemNum + ": " + dvarString("ui_cj_player_list_" + itemNum)) \
+			textfont			UI_FONT_NORMAL \
+			textscale			0.25 \
+			textaligny			10 \
+			mouseEnter 			{ play "mouse_over";} \
+			action 				{ play "mouse_click";responseArg;} \
+			visible 			when(dvarString("ui_cj_player_list_" + itemNum) != "") \
+		}	
+		
+{
+	menuDef 
+	{
+		name 			"admin"
+		rect			-120 -200 400 400 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+		focuscolor		COLOR_FOCUSED
+		style			WINDOW_STYLE_EMPTY
+		visible			1
+//		outOfBoundsClick
+		
+		onOpen
+		{
+			setLocalVarString ui_cj_hintstring "^5>>^7";
+		}
+
+		itemDef
+		{
+			style			WINDOW_STYLE_SHADER
+			rect			0 0 240 400 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 0.75
+			background		"cj_frame"
+			visible			1
+		}
+		
+		itemDef
+		{
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			rect			0 50 240 400 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textscale		TEXTSIZE_DEFAULT
+			textalign		ITEM_ALIGN_CENTER
+			exp	text		(dvarstring("ui_cj_client"))
+			visible			1
+			decoration
+		}
+		
+		itemDef
+		{
+			rect			-90 360 300 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 1
+			exp text		("ID NUMBER: " + dvarint("ui_cj_client_id"))
+			textfont		UI_FONT_NORMAL
+			textscale		0.3
+			textalign		ITEM_ALIGN_RIGHT
+			textaligny		15
+			visible			1
+			decoration
+		}
+		itemDef 
+		{ 
+			type 			ITEM_TYPE_BUTTON 
+			rect			25 360 50 10 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER 
+			forecolor		1 1 1 1 
+			text			"Close" 
+			textfont		UI_FONT_NORMAL 
+			textscale		0.3
+			textalign		ITEM_ALIGN_LEFT 
+			textaligny		15 
+			mouseEnter 		{ play "mouse_over"; } 
+			action 			{ play "mouse_click"; scriptMenuResponse adminmenuclose; close admin; } 
+			visible			when(!dvarInt("ui_cj_give_menu"))
+		}	
+		itemDef 
+		{ 
+			type 			ITEM_TYPE_BUTTON 
+			rect			25 360 50 10 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER 
+			forecolor		1 1 1 1 
+			text			"Back" 
+			textfont		UI_FONT_NORMAL 
+			textscale		0.3
+			textalign		ITEM_ALIGN_LEFT 
+			textaligny		15 
+			mouseEnter 		{ play "mouse_over"; } 
+			action 			{ play "mouse_click"; scriptMenuResponse closegivemenu; } 
+			visible			when(dvarInt("ui_cj_give_menu"))
+		}
+		
+		CJ_BUTTON(1,"Flash Player",aflash,"Creates a ^5flashbang^7 effect on a ^5non admin^7 player.")
+		CJ_BUTTON(2,"Force to Spec",aspec,"Forces an ^5unpromoted^7 player to ^5spectator^7.")
+		CJ_BUTTON(3,"Desaturate",;,"^5Desaturates a ^5non admin^7 players's screen for 10 seconds.")
+		CJ_BUTTON(4,"Ban Player",aban,"^5Permamently ^7bans an ^5unpromoted ^7player.")
+		CJ_BUTTON(5,"Promote Player",apromote,"^5Promotes^7 a player to the ^5VIP^7 rank.")
+		CJ_BUTTON(6,"Teleport to Player",teletoplayer,"^5Teleport^7 to a ^5player's^7 current location.")
+		CJ_BUTTON(7,"Give Weapon",opengivemenu,"Choose from a list of ^5weapons^7 to give a player.")
+		
+		CJ_BUTTON(8,"Kill Player",akill,"^5Kills^7 an ^5unpromoted ^7player.")
+		CJ_BUTTON(9,"Toggle Freeze",afreeze,"^5Freezes^7 a ^5non admin^7 player in place until unfrozen.")
+		CJ_BUTTON(10,"Kick Player",akick,"^5Kicks^7 an ^5unpromoted^7 player with ^5temp ban^7.")
+		CJ_BUTTON(11,"Take Weapon",atakeweapon,"^5Removes^7 a player's ^5current weapon^7.")
+		CJ_BUTTON(12,"Demote Player",ademote,"^5Removes^7 a special ^5status^7 from a player and ^5kill^7 them.")
+		CJ_BUTTON(13,"Teleport Player to You",playertele,"^5Teleport^7 a player ^5to your^7 current location.")
+		CJ_BUTTON(14,"Give Ammo",give_ammo,"^5Refill^7 a player's currently equipped weapon to ^5max ammo^7.")
+
+		CJ_BUTTON_WIDE(1,dvarString("pm"),playermsg,;)
+		CJ_BUTTON_WIDE(2,dvarInt("speed"),setspeed,;)
+		CJ_BUTTON_WIDE(3,dvarString("rename"),setname,;)
+		
+		itemDef
+		{
+			type 			ITEM_TYPE_BUTTON
+			style			WINDOW_STYLE_FILLED
+			rect			25 320 185 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			background		"gradient_fadein"
+			border			1
+			bordercolor		1 1 1 1
+			exp				text(localVarString("ui_cj_hintstring"))
+			textfont		UI_FONT_NORMAL
+			textscale		0.19
+			textalign		ITEM_ALIGN_LEFT
+			textaligny		13
+			visible			1
+			decoration
+		} 
+		
+		itemDef
+		{
+			style			WINDOW_STYLE_SHADER
+			rect			240 0 120 400 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 0.75
+			background		"cj_frame"
+			visible			1
+		}
+#define IDEG(itemNum) CJ_PLAYERITEM(itemNum, scriptmenuresponse player_ ## itemNum)
+
+		IDEG(0)
+		IDEG(1)
+		IDEG(2)
+		IDEG(3)
+		IDEG(4)		
+		IDEG(5)
+		IDEG(6)		
+		IDEG(7)
+		IDEG(8)		
+		IDEG(9)
+		IDEG(10)		
+		IDEG(11)
+		IDEG(12)		
+		IDEG(13)
+		IDEG(14)		
+		IDEG(15)
+		IDEG(16)		
+		IDEG(17)
+		IDEG(18)		
+		IDEG(19)
+		IDEG(20)		
+		IDEG(21)
+		IDEG(22)		
+		IDEG(23)
+		IDEG(24)		
+		IDEG(25)
+		IDEG(26)		
+		IDEG(27)
+		IDEG(28)		
+		IDEG(29)
+		IDEG(30)		
+		IDEG(31)
+		IDEG(32)
+	}
+}

@@ -1,0 +1,267 @@
+#include "ui/menudef.h"
+#define NOT_SPECTATING (!spectatingClient())
+{
+	#define RECT_COMPASS	0 0 COMPASS_SIZE_MP COMPASS_SIZE_MP HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+	#define MINIMAP_ORIGIN 	6 6
+	#undef MINIMAP_Y_MP
+	#define MINIMAP_Y_MP			0
+
+	menuDef
+	{
+		name			"scorebars"
+		rect 				0 0 640 480 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+		fullScreen		0
+		visible			when ( !inkillcam() && !flashbanged() && !scoped() && NOT_SPECTATING);
+		
+		#define INFO_ITEM(itemArg,textArg,visArg) \
+		itemDef \
+		{ \
+			rect 		110 (15*itemArg) 0 0 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP \
+			exp text	(textArg) \
+			textfont	UI_FONT_DEFAULT \
+			textscale	0.25 \
+			textalign	ITEM_ALIGN_LEFT \
+			textstyle	ITEM_TEXTSTYLE_SHADOWED \
+			forecolor	1 1 1 1 \
+			visible		visArg \
+			decoration \
+		}
+		INFO_ITEM(1,"[Save:^2 " +KeyBinding("+melee")+ " ^7x2]",1)
+		INFO_ITEM(2,"[Load:^2 " +KeyBinding("+activate")+ " ^7x2]",1)
+		INFO_ITEM(3,"[Suicide: [Hold]^2 " +KeyBinding("+melee")+ "^7]",1)
+		INFO_ITEM(4,"[RPG:^2 " +KeyBinding("+actionslot 4")+ "^7]",1)
+		INFO_ITEM(5,"[OS: " + dvarString("os_mode") + "^7]",1)
+		
+		INFO_ITEM(6,"[GRAVITY GUN: ^1" +secondsAsCountdown( dvarInt("gravitygun_timeleft" ) )+ "^7]",when( dvarint("gravitygun_timeleft") ))
+		INFO_ITEM(6,"[GRAVITY GUN: ^2" +KeyBinding("+actionslot 3")+ "^7]",when( !dvarint("gravitygun_timeleft") ))
+		INFO_ITEM(7,"[POINTS: ^2"+dvarInt("points")+"^7]",1)
+		/*itemDef 
+		{ 
+			rect 		110 (15*7) 0 0 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+			exp text	"Points: "+dvarInt("points")
+			textfont	UI_FONT_DEFAULT 
+			textscale	0.32
+			textalign	ITEM_ALIGN_LEFT 
+			textstyle	ITEM_TEXTSTYLE_SHADOWED 
+			forecolor	1 1 1 1 
+			visible		1 
+			decoration 
+		}*/
+	}
+
+	menuDef
+	{
+		name			"Compass_old"
+ 	   	rect			RECT_COMPASS
+ 	   	fullScreen		0
+		visible 		when ( !inkillcam() && !flashbanged() && !scoped() );
+ 
+		itemDef
+		{
+			name			"minimapBG"
+			rect			(MINIMAP_X_MP - 14) (MINIMAP_Y_MP - 6) COMPASS_SIZE_MP COMPASS_SIZE_MP
+	 	   	origin 			MINIMAP_ORIGIN
+			forecolor		1 1 1 1
+			background		"minimap_background"
+			ownerdraw		CG_PLAYER_COMPASS_BACK
+			visible 		1
+			decoration
+		}
+		/*itemDef
+		{
+			name			"points"
+			rect			5 150 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_CENTER
+			textscale       0.32
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textfont        UI_FONT_NORMAL
+			exp text        "Points: " + dvarInt( points )
+			visible			when(dvarInt(showpoints)==1)
+			decoration
+		}*/
+		itemDef
+        {
+            name			"minimapTickerBorder"
+            rect			MINIMAP_X_MP ( COMPASS_SIZE_MP - 23) MINIMAP_W_MP 14
+	 	   	origin 			MINIMAP_ORIGIN
+            forecolor		1 1 1 1
+            background		"minimap_tickertape_background"
+            ownerdraw		CG_PLAYER_COMPASS_BACK
+			visible 		1
+			decoration
+        }
+		itemDef
+        {
+            name			"minimapTicker"
+            rect			MINIMAP_X_MP (COMPASS_SIZE_MP - 20) MINIMAP_W_MP 9
+	 	   	origin 			MINIMAP_ORIGIN
+            forecolor		1 1 1 1
+            background		"minimap_tickertape_mp"
+            ownerdraw		CG_PLAYER_COMPASS_TICKERTAPE
+			visible 		1
+			decoration
+        }
+		itemDef 
+		{
+            rect			5 (COMPASS_SIZE_MP + 15) 0 0 
+			exp text		( secondsAsCountdown( timeLeft() ) );
+			textscale		0.35
+			textalign		ITEM_ALIGN_LEFT
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			visible 		1
+			forecolor		1 1 1 1
+			decoration 
+		}
+		itemDef
+ 	   	{
+			name			"mini_map"
+			rect			MINIMAP_X_MP MINIMAP_Y_MP MINIMAP_W_MP MINIMAP_H_MP
+	 	   	origin 			MINIMAP_ORIGIN
+			forecolor		1 1 1 1
+			background		"compass_map_default"
+			ownerdraw		CG_PLAYER_COMPASS_MAP
+			visible 		1
+			decoration
+ 	   	}     
+		itemDef
+		{
+			name			"compasspointers"
+			rect			MINIMAP_X_MP MINIMAP_Y_MP MINIMAP_W_MP MINIMAP_H_MP
+	 	   	origin 			MINIMAP_ORIGIN
+			forecolor		1 1 1 1
+			background		"objective_line"
+			ownerdraw		CG_PLAYER_COMPASS_POINTERS
+			visible 		1
+			decoration
+		}
+		itemDef
+		{
+			name			"compassplayer"
+			rect			MINIMAP_X_MP MINIMAP_Y_MP MINIMAP_W_MP MINIMAP_H_MP
+	 	   	origin 			MINIMAP_ORIGIN
+			forecolor		1 1 1 1
+			background		"compassping_player"
+			ownerdraw		CG_PLAYER_COMPASS_PLAYER
+			visible 		1
+		}
+		itemDef
+		{
+			name            "compassfriendlies"
+			rect 			MINIMAP_X_MP MINIMAP_Y_MP MINIMAP_W_MP MINIMAP_H_MP
+			origin			MINIMAP_ORIGIN
+			forecolor 		1 1 1 1
+			ownerdraw 		CG_PLAYER_COMPASS_FRIENDS
+			visible 		1
+        }
+	}
+	
+	menuDef
+	{
+		name			"gamemessages"
+		rect			6 -65 10 10 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+		fullScreen		0
+		visible			when( !inkillcam() );
+		
+		itemDef
+		{
+			type				ITEM_TYPE_GAME_MESSAGE_WINDOW
+			gamemsgwindowmode	MODE_BOTTOMUP_ALIGN_BOTTOM
+			textfont			UI_FONT_DEFAULT
+			textstyle			ITEM_TEXTSTYLE_SHADOWED
+			textalign			ITEM_ALIGN_LEFT
+			textscale			(0.25)
+			visible				when ( dvarint( ui_hud_obituaries ) == 1 && !ui_active() );
+		}
+	}
+	menuDef
+	{
+		name			"boldgamemessages"
+		rect			0 -60 10 10 HORIZONTAL_ALIGN_CENTER_SAFEAREA VERTICAL_ALIGN_CENTER_SAFEAREA
+		fullScreen		0
+		visible			when( !inkillcam() );
+		
+		itemDef
+		{
+			type				ITEM_TYPE_GAME_MESSAGE_WINDOW
+			gamemsgwindowindex	1
+			gamemsgwindowmode	MODE_BOTTOMUP_ALIGN_BOTTOM
+			textfont			UI_FONT_OBJECTIVE
+			textstyle			ITEM_TEXTSTYLE_SHADOWED
+			textalign			ITEM_ALIGN_CENTER
+			textscale			0.3
+			visible				when ( dvarint( ui_hud_obituaries ) == 1 && !ui_active() );
+		}
+	}
+	
+	#define WEAPINFO_X 0
+	#define WEAPINFO_Y -50
+
+	menuDef
+	{
+		name			"weaponinfo"
+		rect			0 0 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+		fullScreen		0
+		visible			when( !inkillcam() && dvarBool( ammoCounterHide ) == 0 && !flashbanged() && !ui_active() && dvarint( ui_hud_hardcore ) == 0 && NOT_SPECTATING );
+
+	  itemDef
+        {
+            name            "clipText"
+            rect      		(WEAPINFO_X - 72) (WEAPINFO_Y + 42) 57 0
+            textscale		TEXTSIZE_SMALL
+            textstyle  		ITEM_TEXTSTYLE_SHADOWED
+            textfont 		UI_FONT_OBJECTIVE
+            forecolor 		1 1 1 1
+            ownerdraw		CG_PLAYER_AMMO_VALUE
+            visible         0
+            decoration
+        }
+
+		itemDef
+		{
+			name			"weapname"
+			rect			(WEAPINFO_X - 40) (WEAPINFO_Y + 20) 1 1
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textfont		UI_FONT_OBJECTIVE
+			forecolor		1 1 1 0.75
+			ownerdraw		CG_PLAYER_WEAPON_NAME
+			visible 		0
+			decoration
+		}
+	}
+
+	
+	menuDef
+	{
+		name			"xpbar"		
+	}
+	
+	menuDef
+	{
+		name			"Low Health"
+	}
+
+	menuDef
+	{
+		name			"DPad"
+    }
+
+	menuDef
+	{
+    	name			"amitalking"
+	}
+
+ 	menuDef
+	{
+    	name			"talkers"
+	}
+	
+	menuDef
+	{
+		name			"scorebar"
+	}
+	
+	menuDef 
+	{
+		name			"HoldBreathHint"
+	}
+}

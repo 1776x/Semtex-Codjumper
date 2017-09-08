@@ -1,0 +1,67 @@
+REFERENCE           QUICK_MESSAGE
+LANG_ENGLISH        "Quick Message"
+
+REFERENCE           1_COMMANDS
+LANG_ENGLISH        "1. Commands"
+
+REFERENCE           2_STATEMENTS
+LANG_ENGLISH        "2. Statements"
+
+REFERENCE           3_RESPONSES
+LANG_ENGLISH        "3. Responses"
+
+REFERENCE           ESC_EXIT
+LANG_ENGLISH        "Esc. Exit"
+
+REFERENCE           1_FOLLOW_ME
+LANG_ENGLISH        "1. Follow Me!"
+
+REFERENCE           2_HOLD_THIS_POSITION
+LANG_ENGLISH        "2. Stay Here!"
+
+REFERENCE           3_IM_IN_POSITION
+LANG_ENGLISH        "3. In Position"
+
+REFERENCE           4_NEED_REINFORCEMENTS
+LANG_ENGLISH        "4. Please Help Stack"
+
+REFERENCE           5_YES_SIR
+LANG_ENGLISH        "5. Yes!"
+
+REFERENCE           6_NO_SIR
+LANG_ENGLISH        "6. No!"
+
+REFERENCE           7_IM_ON_MY_WAY
+LANG_ENGLISH       "7. On My Way"
+
+REFERENCE			8_SORRY
+LANG_ENGLISH       "8. Sorry"
+
+
+REFERENCE           FOLLOW_ME
+LANG_ENGLISH        "Follow Me!"
+
+REFERENCE           HOLD_THIS_POSITION
+LANG_ENGLISH        "Stay Here!"
+
+REFERENCE           IM_IN_POSITION
+LANG_ENGLISH        "In Position"
+
+REFERENCE           NEED_REINFORCEMENTS
+LANG_ENGLISH        "Please Help Stack"
+
+REFERENCE           YES_SIR
+LANG_ENGLISH        "Yes!"
+
+REFERENCE           NO_SIR
+LANG_ENGLISH        "No!"
+
+REFERENCE           IM_ON_MY_WAY
+LANG_ENGLISH        "On My Way"
+
+REFERENCE           SORRY
+LANG_ENGLISH        "Sorry!"
+
+ENDMARKER
+
+

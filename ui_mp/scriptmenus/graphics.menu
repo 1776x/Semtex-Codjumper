@@ -1,0 +1,85 @@
+#include "ui/menudef.h"
+
+#define CJ_BUTTON(itemNum,textArg,buttonText) \		
+		itemDef \
+		{ \
+			rect			30 (60+(itemNum*26)) 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			textfont		UI_FONT_NORMAL \
+			textscale		0.3 \
+			exp 		 	text(textArg) \
+			visible			1 \
+			decoration \
+		} \
+		itemDef \
+		{ \
+			type 			ITEM_TYPE_BUTTON \
+			rect			135 (40+(itemNum*26)) 120 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			forecolor		0.7 0.7 0.7 1 \
+			border			1 \
+			borderSize		1 \
+			bordercolor		1 1 1 1 \
+			visible			1 \
+			exp				text(buttonText) \
+			textfont		UI_FONT_NORMAL \
+			textscale		0.3 \
+			textalign		ITEM_ALIGN_CENTER \
+			textaligny		15 \
+			mouseEnter 		{ play "mouse_over"; } \
+			action 			{ play "mouse_click"; \
+			scriptMenuResponse itemNum;  \
+			}  \
+		}
+		
+{
+	menuDef 
+	{
+		name 			"graphics"
+		rect			-150 -125 300 250 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+		focuscolor		COLOR_FOCUSED
+		style			WINDOW_STYLE_SHADER
+		background 		"cj_frame"
+		blurWorld		3.0
+		visible			1
+	
+		itemDef
+		{
+			rect			30 35 0 0
+			forecolor		1 1 1 1
+			textfont		UI_FONT_NORMAL
+			textscale		TEXTSIZE_DEFAULT
+			text			"Graphics Tweaks" 
+			visible			1
+			decoration
+		}
+		itemDef
+		{
+			rect 			30 32 120 0.7
+			style			WINDOW_STYLE_FILLED
+			backcolor		1 1 1 1
+			visible			1
+			decoration
+		}
+		itemDef
+		{
+			type 			ITEM_TYPE_BUTTON
+			rect			-25 225 300 250 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 1
+			text			"Close"
+			textfont		UI_FONT_NORMAL
+			textscale		TEXTSIZE_DEFAULT
+			textalign		ITEM_ALIGN_RIGHT
+			textaligny		15
+			mouseEnter 		{ play "mouse_over"; }
+			action 			{ play "mouse_click"; close self; }
+			visible			1
+		}
+
+		CJ_BUTTON(0,"Draw Decals",dvarString("ui_drawdecals") + "Toggle")
+		CJ_BUTTON(1,"Fullbright",dvarString("ui_fullbright") + "Toggle")
+		CJ_BUTTON(2,"Draw FX",dvarString("ui_fxenable") + "Toggle")
+		CJ_BUTTON(3,"Draw Distance","Draw distance is " + dvarString("ui_drawdistance") + ".")
+		CJ_BUTTON(4,"Fog",dvarString("ui_fogenable") + "Toggle")
+		CJ_BUTTON(5,"3rd Person",dvarString("ui_thirdperson") + "Toggle")
+		CJ_BUTTON(6,"FOV Scale",dvarString("cg_fovscale"))
+	}
+}

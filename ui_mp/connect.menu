@@ -1,0 +1,134 @@
+#include "ui/menudef.h"
+{
+	menuDef 
+	{
+		name			"connect"
+		style			WINDOW_STYLE_SHADER
+		fullScreen		0
+		focusColor		COLOR_FOCUSED
+		visible			1		
+		backcolor		1 1 1 1
+		background		"semtex_background"
+		rect			FULLSCREEN_WIDE
+
+		itemDef
+		{
+			rect			128 20 200 100 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+			forecolor		1 1 1 1
+			style			WINDOW_STYLE_SHADER
+			background		"semtex_logo"
+			visible 		1
+			decoration
+		}
+		itemDef
+		{
+			rect			128 50 200 100 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_CENTER
+			forecolor		1 1 1 1
+			style			WINDOW_STYLE_SHADER
+			background		"$levelBriefing"
+			visible 		1
+			border			1
+			borderColor		0 0.54 1 1
+			decoration
+		}
+
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			-130 -71 260 34 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM
+			origin 			107 0
+			backcolor		0 0.54 1 0.1
+			border			1
+			borderColor		0 0.54 1 1
+			visible			1	
+			decoration	
+		}
+
+		itemDef 
+		{
+			name			"loadbar"
+			style			WINDOW_STYLE_LOADBAR
+			rect			-128 -69 256 32 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM
+			origin 			107 0
+			background		"semtex_loadbar"
+			visible			1	
+		}
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			0 7 1000 3 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+			backcolor		0 0.54 1 1
+			visible			1	
+		}
+		itemDef 
+		{
+			style			WINDOW_STYLE_FILLED
+			rect			0 -10 1000 3 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			backcolor		0 0.54 1 1
+			visible			1	
+		}
+
+		itemDef 
+		{
+			style			WINDOW_STYLE_SHADER
+			rect			0 10 150 65 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			background		"gradient_fadein"
+			forecolor		0 0.54 1 0.5
+			visible			1	
+		}
+
+		itemDef
+		{
+			rect			90 30 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			text			"^5SemteX ^7CodJumper Beta"
+			textfont		UI_FONT_DEFAULT
+			textscale		0.3
+			textalign		ITEM_ALIGN_RIGHT
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			forecolor		1 1 1 1
+			visible 		1
+			decoration 
+		}
+
+		itemDef
+		{
+			rect			90 45 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			text			"^5Remod by EMZ & Vaki"
+			textfont		UI_FONT_DEFAULT
+			textscale		0.3
+			textalign		ITEM_ALIGN_RIGHT
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			forecolor		1 1 1 1
+			visible 		1
+			decoration 
+		}
+
+		itemDef
+		{
+			rect			90 60 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			text			"x^5Fire^7: zolikoko987 ^5&^7 vakihun"
+			textfont		UI_FONT_DEFAULT
+			textscale		0.3
+			textalign		ITEM_ALIGN_RIGHT
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			forecolor		1 1 1 1
+			visible 		1
+			decoration 
+		}
+
+		itemDef
+		{
+			rect			90 75 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			text			"www.^5semtex^7.tk"
+			textfont		UI_FONT_DEFAULT
+			textscale		0.3
+			textalign		ITEM_ALIGN_RIGHT
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			forecolor		1 1 1 1
+			visible 		1
+			decoration 
+		}
+		
+		#include "ui/safearea.menu"
+	}
+}

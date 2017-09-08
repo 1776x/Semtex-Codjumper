@@ -1,0 +1,6 @@
+give_[weaponnamehere]
+attach_[attachnamehere]
+give_weapon
+miafasztez
+1308273
+semtex14567ASDD

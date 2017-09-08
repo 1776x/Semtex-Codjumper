@@ -1,0 +1,256 @@
+#include "ui/menudef.h"
+
+#define CJ_BUTTON(itemNum,textArg,responseArg) \		
+		itemDef \
+		{ \
+			type 			ITEM_TYPE_BUTTON \
+			rect			30 (45+(itemNum*30)) 150 25 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			textfont		UI_FONT_NORMAL \
+			textscale		TEXTSIZE_SMALL \
+			exp 		 	text(textArg) \
+			visible			1 \
+			textaligny		15 \
+			mouseEnter 		{ play "mouse_over"; } \
+			action 			{ play "mouse_click"; \
+			responseArg;  \
+			close self; \
+			}  \
+		} 
+		
+#define CJ_TITLE(titleArg,widthArg) \
+		itemDef \
+		{ \
+			rect 			30 31 widthArg 0.7 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			style			WINDOW_STYLE_FILLED \
+			backcolor		0.75 0.75 0.75 1 \
+			visible			1 \
+			decoration \
+		} \
+		itemDef \
+		{ \
+			rect			30 35 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			forecolor		1 1 1 1 \
+			textfont		UI_FONT_NORMAL \
+			textscale		TEXTSIZE_DEFAULT \
+			exp text		(titleArg) \
+			visible			1 \
+			decoration \
+		}
+	
+		
+#define CJ_CLOSE \
+		itemDef \
+		{ \
+			type 			ITEM_TYPE_BUTTON \
+			rect			-25 225 300 25 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			forecolor		1 1 1 1 \
+			text			"Close" \
+			textfont		UI_FONT_NORMAL \
+			textscale		TEXTSIZE_DEFAULT \
+			textalign		ITEM_ALIGN_RIGHT \
+			textaligny		15 \
+			mouseEnter 		{ play "mouse_over"; } \ 
+			action 			{ play "mouse_click"; close self; } \
+			visible			1 \
+		}		
+		
+#define CJ_BACK(menuArg) \
+		itemDef \
+		{ \
+			type 			ITEM_TYPE_BUTTON \
+			rect			25 225 300 25 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			forecolor		1 1 1 1 \
+			text			"Back" \
+			textfont		UI_FONT_NORMAL \
+			textscale		TEXTSIZE_DEFAULT \
+			textalign		ITEM_ALIGN_LEFT \
+			textaligny		15 \
+			mouseEnter 		{ play "mouse_over"; } \ 
+			action 			{ play "mouse_click"; close self; open menuArg } \
+			visible			1 \
+		}		
+{
+	menuDef 
+	{
+		name 			"cjvote"
+		rect			-150 -125 300 250 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+		focuscolor		COLOR_FOCUSED
+		style			WINDOW_STYLE_SHADER
+		background 		"cj_frame"
+		blurWorld		3.0
+		visible			1
+	
+		CJ_TITLE("Vote Menu",80)
+		CJ_CLOSE
+		CJ_BACK(quickmessage)
+
+
+		CJ_BUTTON(0,"Vote: Extend/Rotate/Change",open vote_exroch)
+		CJ_BUTTON(1,"Vote: Kick Player",open vote_kick)
+	}
+	
+	menuDef 
+	{
+		name 			"vote_exroch"
+		rect			-150 -125 300 250 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+		focuscolor		COLOR_FOCUSED
+		style			WINDOW_STYLE_SHADER
+		background 		"cj_frame"
+		blurWorld		3.0
+		visible			1
+	
+		CJ_TITLE("Vote: Extend/Rotate/Change",200 )
+		CJ_CLOSE
+		CJ_BACK(cjvote)
+
+
+		CJ_BUTTON(0,"Vote: Extend Time",scriptMenuResponse extend)
+		CJ_BUTTON(1,"Vote: Rotate Map",scriptMenuResponse rotate)
+		CJ_BUTTON(2,"Vote: Change Map",open vote_map)
+	}
+	menuDef 
+	{
+		name 			"vote_kick"
+		rect			-150 -125 300 250 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+		focuscolor		COLOR_FOCUSED
+		style			WINDOW_STYLE_SHADER
+		background 		"cj_frame"
+		blurWorld		3.0
+		visible			1
+	
+		CJ_TITLE("Vote: Kick Player",120 )
+		CJ_CLOSE
+		CJ_BACK(cjvote)
+
+		
+		itemDef
+		{
+			rect			0 100 300 0
+			textfont		UI_FONT_NORMAL
+			textscale		0.5
+			forecolor		0.75 0.75 0.75 1
+			textalign		ITEM_ALIGN_CENTER
+			exp 		 	text(dvarString(ui_cj_player))
+			visible			1
+			decoration
+		} 
+		
+		itemDef
+		{
+			rect			0 140 300 15
+			textfont		UI_FONT_NORMAL
+			textscale		0.4
+			textaligny		15
+			textalign		ITEM_ALIGN_CENTER
+			exp				text("Vote")
+			visible			1
+			mouseEnter 		{ play "mouse_over"; }
+			action 			{ play "mouse_click";
+			scriptMenuResponse kick; 
+			close self;
+			} 
+		}	
+		
+		itemDef
+		{
+			rect			30 140 60 15
+			textfont		UI_FONT_NORMAL
+			textscale		0.3
+			textaligny		15
+			textalign		ITEM_ALIGN_LEFT
+			exp 		 	text("Previous Player")
+			visible			1
+			mouseEnter 		{ play "mouse_over"; }
+			action 			{ play "mouse_click";
+			scriptMenuResponse prev; 
+			} 
+		}	
+		itemDef
+		{
+			rect			200 140 60 15
+			textfont		UI_FONT_NORMAL
+			textscale		0.3
+			textaligny		15
+			textalign		ITEM_ALIGN_RIGHT
+			exp 		 	text("Next Player")
+			visible			1
+			mouseEnter 		{ play "mouse_over"; }
+			action 			{ play "mouse_click";
+			scriptMenuResponse next; 
+			} 
+		}	
+	}
+	menuDef 
+	{
+		name 			"vote_map"
+		rect			-150 -125 300 250 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER
+		focuscolor		COLOR_FOCUSED
+		style			WINDOW_STYLE_SHADER
+		background 		"cj_frame"
+		blurWorld		3.0
+		visible			1
+	
+		CJ_TITLE("Vote: Change Map",130 )
+		CJ_CLOSE
+		CJ_BACK(vote_exroch)
+
+		
+		itemDef
+		{
+			rect			0 100 300 0
+			textfont		UI_FONT_NORMAL
+			textscale		0.5
+			forecolor		0.75 0.75 0.75 1
+			textalign		ITEM_ALIGN_CENTER
+			exp 		 	text(dvarString(ui_cj_map))
+			visible			1
+			decoration
+		} 
+		
+		itemDef
+		{
+			rect			0 140 300 15
+			textfont		UI_FONT_NORMAL
+			textscale		0.4
+			textaligny		15
+			textalign		ITEM_ALIGN_CENTER
+			exp				text("Vote")
+			visible			1
+			mouseEnter 		{ play "mouse_over"; }
+			action 			{ play "mouse_click";
+			scriptMenuResponse change; 
+			close self;
+			} 
+		}	
+		
+		itemDef
+		{
+			rect			30 140 60 15
+			textfont		UI_FONT_NORMAL
+			textscale		0.3
+			textaligny		15
+			textalign		ITEM_ALIGN_LEFT
+			exp 		 	text("Previous Map")
+			visible			1
+			mouseEnter 		{ play "mouse_over"; }
+			action 			{ play "mouse_click";
+			scriptMenuResponse mprev; 
+			} 
+		}	
+		itemDef
+		{
+			rect			200 140 60 15
+			textfont		UI_FONT_NORMAL
+			textscale		0.3
+			textaligny		15
+			textalign		ITEM_ALIGN_RIGHT
+			exp 		 	text("Next Map")
+			visible			1
+			mouseEnter 		{ play "mouse_over"; }
+			action 			{ play "mouse_click";
+			scriptMenuResponse mnext; 
+			} 
+		}	
+	}
+
+}

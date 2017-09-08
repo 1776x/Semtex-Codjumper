@@ -1,0 +1,8 @@
+//num,idk,minxp,maxxp,overhead,idk,icon,xp,idk,idk,idk,idk,idk,idk,scoreboard,idk,idk
+0,Player,0,0,,CJ_PLAYER,rank_player,1,;,;,;,;,;,1,Player,;,CJ_PLAYER
+1,Member,-30,-10,CJ_MEMBER,,rank_special_3,300000,;,;,;,;,;,22,Member,;,CJ_MEMBER
+2,Vip,-30,-10,CJ_VIP,CJ_VIP_FULL,rank_vip,100000,;,;,;,;,;,20,VIP,;,CJ_VIP
+3,Admin,-30,-10,CJ_ADMIN,CJ_ADMIN_FULL,rank_admin,200000,;,;,;,;,;,21,Admin,;,CJ_ADMIN
+4,EMZ,-30,-10,CJ_EMZ,CJ_EMZ,rank_special_1,300000,;,;,;,;,;,22,God,;,CJ_EMZ
+5,Vaki,-30,-10,CJ_VAKI,CJ_VAKI,rank_special_2,300000,;,;,;,;,;,22,God,;,CJ_VAKI
+6,Asshole,0,0,,CJ_ASSHOLE,rank_asshole,1,;,;,;,;,;,1,Asshole,;,CJ_ASSHOLE
